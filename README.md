@@ -1,4 +1,7 @@
 # ShadowSteal | CVE-2021-36934
+###  v.06.9 | THE NICE UPDATE
+Lean and mean.  Compress all shadow files that exist. Optimized compile options added.
+
 ###  v.02 | THE JEFF BEEZY UPDATE
 Pure Nim implementation for exploiting CVE-2021-36934, the SeriousSAM Local Privilege Escalation (LPE). Nothing fancy, basically just a wrapper for PowerShell copy, but does save some time if you're triaging vulnerable hosts. Not OPSEC safe.... yet ;). I do not claim credit for the discovery of this exploit.
 
@@ -52,6 +55,10 @@ $ sudo apt-get install mingw-w64
 Compile for 64-bit Windows:
 ```
 $ nim c --d:mingw --cpu=amd64 --app=console ShadowSteal.nim
+```
+Optimize compile
+```
+$ nim c --d:mingw --d:release --cpu=amd64 --app=console --deadCodeElim:on --opt:size --stackTrace:off --lineTrace:off  ShadowSteal.nim
 ```
 Transfer to target and run it!
 ## Usage
